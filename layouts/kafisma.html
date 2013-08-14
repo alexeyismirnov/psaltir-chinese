@@ -15,8 +15,34 @@
 
         <!-- User-generated css -->
         <style>
-            .rubric { color: red; font-size: 80%; font-family: 华文仿宋, 仿宋; }
-             sup { color:blue; font-size:xx-small; }
+        .rubric { color: red; font-size: 80%; font-family: 华文仿宋, 仿宋; }
+        sup { color:blue; font-size:xx-small; }
+        #content { font-size: 14px; }
+
+        .ui-icon-fontinc
+        {
+            background: url('fontinc.jpg') no-repeat rgba(0, 0, 0, 0.4) !important;
+            background-size: 30px 30px;
+            width:30px;
+            height:30px;
+            margin-top:10px;
+        }
+
+        .ui-icon-fontdec
+        {
+            background: url('fontdec.jpg') no-repeat rgba(0, 0, 0, 0.4) !important;
+            background-size: 30px 30px;
+            width:30px;
+            height:30px;
+            margin-top:10px;
+        }
+
+        #mynavbar .ui-btn-inner
+        {
+          padding: 20px 0;
+        }
+
+
         </style>
 
         <!-- User-generated js -->
@@ -25,11 +51,17 @@
 
             function onLoad() {
                 document.addEventListener("deviceready", onDeviceReady, false);
+
+                $("#fontinc .ui-icon").removeClass("ui-icon-shadow");
+                $("#fontdec .ui-icon").removeClass("ui-icon-shadow");
             }
 
             // Cordova is loaded and it is now safe to call Cordova methods
             function onDeviceReady() {
                 document.addEventListener("backbutton", onBackKeyDown, false);
+
+                document.addEventListener("menubutton", 
+                    function(e) {$(".ui-footer").toggle();return false;}, false);
             }
 
             // Handle the back button
@@ -57,9 +89,53 @@
 
 <%= yield %>
 
-
             </div>
+
+           <div class="ui-footer" data-theme="a" data-role="footer" data-position="fixed">
+                <div data-role="navbar" >
+                    <ul id="mynavbar" >
+
+                        <li>
+                            <a href="#" data-iconpos="bottom" data-icon="fontinc" id="fontinc" >&nbsp;</a>
+                        </li>
+
+                        <li>
+                            <a href="#" data-iconpos="bottom" data-icon="fontdec" id="fontdec" >&nbsp;</a>
+                        </li>
+
+                        <li>
+                            <a  href="market://details?id=com.psaltir.chinese" data-ajax="false" data-transition="fade" data-theme="" data-icon="">
+                                Rate app!
+                            </a>
+                        </li>
+
+                    </ul>
+                </div>
+            </div>
+
         </div>
-    </body>
+
+<script>
+
+    $("#fontinc").tap(function() {
+        var fontSize = $("#content").css("font-size").replace("px", "");
+        var newFontSize = (parseInt(fontSize)+1) + "px";
+        $("#content").css("font-size", newFontSize); 
+
+        return false;
+    });
+
+    $("#fontdec").tap(function() {
+        var fontSize = $("#content").css("font-size").replace("px", "");
+        var newFontSize = (parseInt(fontSize)-1) + "px";
+        $("#content").css("font-size", newFontSize); 
+
+        return false;
+    });
+
+</script>
+
+
+</body>
 </html>
 
