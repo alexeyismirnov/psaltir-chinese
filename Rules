@@ -13,18 +13,17 @@
 #   item, use the pattern “/about/*/”; “/about/*” will also select the parent,
 #   because “*” matches zero or more characters.
 
-route '/static/*' do
+route '/static/*.js' do
   # /static/foo.html/ → /foo.html
-  item.identifier[7..-2]
+  '/js' + item.identifier[7..-2]
 end
 
-compile '/app' do
-  filter :erb
-  layout 'default'
+route '/static/*.css' do
+  # /static/foo.html/ → /foo.html
+  '/css' + item.identifier[7..-2]
 end
 
-
-compile '*' do
+compile '/*/' do
   if item.binary?
     # don’t filter binary items
   else
@@ -33,16 +32,19 @@ compile '*' do
   end
 end
 
+compile '/' do
+  filter :erb
+  layout 'default'
+end
+
 route '*' do
-  if item.binary?
+#  if item.binary?
     # Write item with identifier /foo/ to /foo.ext
-    item.identifier.chop + '.' + item[:extension]
+#    item.identifier.chop + '.' + item[:extension]
 
-  elsif item[:filename] =~ /index.html$/
+  if item[:filename] =~ /index.html$/
     item.identifier + 'index.html'
-
   else
-    # Write item with identifier /foo/ to /foo/index.html
     item.identifier.chop + '.' + item[:extension]
   end
 end
