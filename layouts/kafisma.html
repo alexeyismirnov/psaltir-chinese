@@ -9,6 +9,9 @@
         <link rel="stylesheet" href="css/jquery.mobile-1.4.0.min.css" />
         <script src="js/jquery-1.10.2.min.js"> </script>
         <script src="js/jquery.mobile-1.4.0.min.js"> </script>
+        <script src="js/fastclick.js"> </script>
+        <script src="js/panel.js"> </script>
+        <script src="js/app.js"> </script>
         <script type="text/javascript" src="phonegap.js"></script>
 
         <!-- User-generated css -->
@@ -21,37 +24,21 @@
 
         <!-- User-generated js -->
         <script>
-        try {
-
-            function onLoad() {
-                document.addEventListener("deviceready", onDeviceReady, false);
-            }
-
-            // Cordova is loaded and it is now safe to call Cordova methods
-            function onDeviceReady() {
-                document.addEventListener("backbutton", onBackKeyDown, false);
-
-                document.addEventListener("menubutton", 
-                    function(e) {$(".ui-footer").toggle();return false;}, false);
-            }
 
             // Handle the back button
             function onBackKeyDown() {
-                window.location.assign("./index.html");
+                navigator.app.exitApp();
             }
 
-        } catch (error) {
-            console.error("Your javascript has an error: " + error);
-        }
 
         </script>
 
     </head>
 
-    <body onload="onLoad()" >
+    <body onload="app.initialize()" >
         <!-- Home -->
         <div data-role="page" id="page1">
-            <div data-theme="a" data-role="header">
+            <div id="header" data-theme="a" data-role="header">
                 <h3>
 <%= item[:title] %>
                 </h3>
@@ -65,19 +52,20 @@
            <div class="ui-footer" data-theme="b" data-role="footer" data-position="fixed">
                 <div data-role="navbar" data-iconpos="top">
                     <ul>
-
                         <li>
-                            <a href="#" data-icon="plus" id="fontinc" >Zoom in</a>
+                            <a href="#" data-icon="bars" id="toc">目录</a>
                         </li>
 
                         <li>
-                            <a href="#" data-icon="minus" id="fontdec" >Zoom out</a>
+                            <a href="#" data-icon="plus" id="fontinc" >放大</a>
                         </li>
 
                         <li>
-                            <a  href="market://details?id=com.psaltir.chinese" data-ajax="false" data-icon="star">
-                                Rate app!
-                            </a>
+                            <a href="#" data-icon="minus" id="fontdec">缩小</a>
+                        </li>
+
+                        <li>
+                            <a href="#" data-icon="action" id="buttonExit">退出 </a>
                         </li>
 
                     </ul>
@@ -85,26 +73,6 @@
             </div>
 
         </div>
-
-<script>
-
-    $("#fontinc").tap(function() {
-        var fontSize = $("#content").css("font-size").replace("px", "");
-        var newFontSize = (parseInt(fontSize)+1) + "px";
-        $("#content").css("font-size", newFontSize); 
-
-        return false;
-    });
-
-    $("#fontdec").tap(function() {
-        var fontSize = $("#content").css("font-size").replace("px", "");
-        var newFontSize = (parseInt(fontSize)-1) + "px";
-        $("#content").css("font-size", newFontSize); 
-
-        return false;
-    });
-
-</script>
 
 
 </body>
