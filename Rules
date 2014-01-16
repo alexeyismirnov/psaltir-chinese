@@ -32,8 +32,6 @@ compile '/*/' do
 end
 
 compile '/' do
-  filter :erb
-  layout 'default'
 end
 
 route '/static/*.js' do

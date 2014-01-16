@@ -3,6 +3,11 @@ window.panel1 = '''
 <div data-role="panel" id="mypanel">
 
                 <ul data-role="listview" data-divider-theme="b" data-inset="true">
+                    <li data-theme="c">
+                        <a href="./kafisma0.html" data-ajax="false" data-transition="slide">
+關於集體誦讀聖詠
+                        </a>
+                    </li>
 
                     <li data-theme="c">
                         <a href="./kafisma1.html" data-ajax="false" data-transition="slide">
@@ -10,7 +15,7 @@ window.panel1 = '''
                         </a>
                     </li>
                     <li data-theme="c">
-                        <a href="./kafisma2.html" data-ajax="false" data-transition="slide">
+                        <a id="k2" href="./kafisma2.html" data-ajax="false" data-transition="slide">
 第二分 第9-16咏经 
                         </a>
                     </li>

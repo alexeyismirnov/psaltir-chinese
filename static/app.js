@@ -6,13 +6,23 @@ var app = {
     initialize: function() {
         document.addEventListener("deviceready", this.onDeviceReady, false);
 
-        this.load();
         this.initDialogs();
         this.initButtonHandlers();
 
         var attachFastClick = require('fastclick');
         attachFastClick(document.body);
 
+        var myregex = /kafisma(\d+)/g;
+        var num = parseInt(myregex.exec(document.URL)[1]);
+
+        this.pageNum = num;
+        this.save();
+
+        $("#mypanel ul li:nth-child(" + (num+1).toString() + ") a").addClass("ui-btn-active");
+    },
+
+    redirect: function() {
+        window.location = './kafisma' + this.pageNum.toString() + '.html';
     },
 
     initButtonHandlers: function() {
@@ -72,7 +82,6 @@ var app = {
         var fontSize = $("#content").css("font-size").replace("px", "");
         var newFontSize = (parseInt(fontSize)+diff) + "px";
         $("#content").css("font-size", newFontSize); 
-        $(".ui-btn").css("font-size", newFontSize); 
 
         this.fontSize = newFontSize;
         this.save();
@@ -88,8 +97,7 @@ var app = {
           this.pageNum = saved['pageNum'];
         }
 
-        $("#content").css("font-size", this.fontSize); 
-        $(".ui-btn").css("font-size", this.fontSize); 
+        document.getElementById("content").style.fontSize = this.fontSize;
 
     },
 
@@ -99,4 +107,5 @@ var app = {
 
 };
 
+app.load();
 
