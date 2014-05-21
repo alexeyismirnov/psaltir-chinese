@@ -1,6 +1,6 @@
 // Ionic Psaltir App
 
-angular.module('psaltir', ['ionic'])
+angular.module('psaltir', ['ionic', 'psaltir.controllers'])
 
 .run(function($ionicPlatform) {
   $ionicPlatform.ready(function() {
