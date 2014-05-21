@@ -6,6 +6,18 @@
 
 <body onload="app.redirect()">
 
+<ion-content>
+<ion-list>
+
+<% sorted_kafismas.each do |entry| %>
+    <ion-item href="#/kafisma/<%= entry[:number] %>">
+      <%= entry[:title]  %>
+    </ion-item>
+<% end %>
+
+</ion-list>
+</ion-content>
+
 </body>
 </html>
 

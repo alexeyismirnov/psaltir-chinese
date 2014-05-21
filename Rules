@@ -32,6 +32,7 @@ compile '/*/' do
 end
 
 compile '/' do
+    filter :erb
 end
 
 route '/static/*.js' do
