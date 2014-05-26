@@ -14,20 +14,19 @@
 #   because “*” matches zero or more characters.
 
 
-compile '/coffeescript/*' do
-  filter :coffeescript
-end
+#compile '/coffeescript/*' do
+#  filter :coffeescript
+#end
 
-route '/coffeescript/*' do
-  '/js' + item.identifier[13..-2] + '.js'
-end
+#route '/coffeescript/*' do
+#  '/js' + item.identifier[13..-2] + '.js'
+#end
 
 compile '/*/' do
   if item.binary?
-    # don’t filter binary items
   else
     filter :erb
-    layout 'kafisma'
+    layout 'default'
   end
 end
 
@@ -35,13 +34,15 @@ compile '/' do
     filter :erb
 end
 
+route '/static/*.html' do
+  item.identifier[7..-2]
+end
+
 route '/static/*.js' do
-  # /static/foo.html/ → /foo.html
   '/js' + item.identifier[7..-2]
 end
 
 route '/static/*.css' do
-  # /static/foo.html/ → /foo.html
   '/css' + item.identifier[7..-2]
 end
 
@@ -49,7 +50,7 @@ route '*' do
   if item[:filename] =~ /index.html$/
     item.identifier + 'index.html'
   else
-    item.identifier.chop + '.' + item[:extension]
+    '/templates' + item.identifier.chop + '.' + item[:extension]
   end
 end
 
