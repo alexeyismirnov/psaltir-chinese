@@ -7,6 +7,9 @@ title: 官话圣咏经
 <% sorted_kafismas.each do |entry| %>
     <ion-item href="#/kafisma/<%= entry[:number] %>">
       <%= entry[:title]  %>
+    <span class="item-note">
+      <%= entry[:note]  %>
+    </span>
     </ion-item>
 <% end %>
 

@@ -39,6 +39,60 @@
   <ion-nav-view animation="slide-left-right">
   </ion-nav-view>
 
+<script id="modal.html" type="text/ng-template">
+<div class="modal">
+
+  <div class="bar bar-header bar-energized">
+    <h1 class="title">Options</h1>
+  </div>
+  <br></br>
+  <form ng-submit="">
+    <div class="list list-inset">
+
+  <label class="item">
+    <div class="item-content">Размер шрифта</div>
+    <div class="range range-positive">
+    <i class="icon ion-minus-circled"></i>
+    <input type="range" name="volume" min="10" max="20" value="14" ng-model="data.fontsize" >
+    <i class="icon ion-plus-circled"></i>
+    </div>
+  </label>
+
+  <label class="item item-input item-stacked-label">
+    <span class="input-label">За здравие</span>
+    <textarea ng-model="data.alive" placeholder="Имена" ></textarea>
+  </label>
+
+  <label class="item item-input item-stacked-label">
+    <span class="input-label">За упокой</span>
+    <textarea ng-model="data.dead" placeholder="Имена" ></textarea>
+  </label>
+
+  <div class="item item-checkbox">
+    <label class="checkbox">
+      <input type="checkbox" ng-model="data.show" >
+    </label>
+    "Слава и ныне" целиком
+  </div>
+
+
+    </div>
+
+    <div class="button-bar">
+      <button class="button  button-stable" ng-click="closeModal()">
+        Cancel
+      </button>
+      <button class="button  button-positive" type="submit">
+        Save 
+      </button>
+    </div>
+
+  </form>
+
+</div>
+</script>
+
+
   </body>
 </html>
 
