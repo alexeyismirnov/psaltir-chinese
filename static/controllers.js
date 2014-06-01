@@ -1,6 +1,6 @@
 angular.module('psaltir.controllers', [])
 
-.controller('PsaltirCtrl', function($scope, $ionicActionSheet, $ionicModal, $ionicPopup) {
+.controller('PsaltirCtrl', function($scope, $ionicActionSheet, $ionicModal, $ionicPopup, psaltirConfig) {
 
  $scope.show = function() {
 
@@ -14,7 +14,7 @@ angular.module('psaltir.controllers', [])
      buttonClicked: function(index) {
        switch (index) {
        case 0:
-           $scope.modal.show();
+           $scope.openModal();
            break;
        case 1:
            $scope.about();
@@ -43,6 +43,7 @@ angular.module('psaltir.controllers', [])
 
     // function to open the modal
     $scope.openModal = function () {
+      $scope.config = psaltirConfig.get();
       $scope.modal.show();
     };
 
@@ -72,8 +73,30 @@ angular.module('psaltir.controllers', [])
       });
     };
 
+    $scope.config = psaltirConfig.get();
+
+    $scope.saveConfig = function() {
+      $scope.modal.hide();
+      psaltirConfig.save($scope.config);
+    }
 
 })
 
+.service('psaltirConfig', function() {
+
+  this.get = function() {
+    if (localStorage['psaltirionic'] == null) 
+      return { fontsize: 14, alive: 'John', dead: '', showAll: false };
+
+    else 
+      return JSON.parse(localStorage['psaltirionic']);
+
+  };
+
+  this.save = function(config) {
+    localStorage['psaltirionic'] = JSON.stringify(config);
+  };
+
+});
 
 
