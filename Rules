@@ -14,13 +14,10 @@
 #   because “*” matches zero or more characters.
 
 
-#compile '/coffeescript/*' do
-#  filter :coffeescript
-#end
-
-#route '/coffeescript/*' do
-#  '/js' + item.identifier[13..-2] + '.js'
-#end
+compile '/home/' do
+  filter :erb
+  layout 'home'
+end
 
 compile '/*/' do
   if item.binary?

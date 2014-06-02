@@ -1,38 +1,40 @@
 angular.module('psaltir.controllers', [])
 
-.controller('PsaltirCtrl', function($scope, $ionicActionSheet, $ionicModal, $ionicPopup, psaltirConfig) {
+.controller('PsaltirCtrl', function($scope, $state, $ionicActionSheet, $ionicModal, $ionicPopup, psaltirConfig) {
 
- $scope.show = function() {
+    $scope.show = function() {
+       $ionicActionSheet.show({
+         buttons: [
+           { text: '选项' },
+           { text: 'About this app' },
+         ],
+         destructiveText: 'Exit app',
+         buttonClicked: function(index) {
+           switch (index) {
+           case 0:
+               $scope.openModal();
+               break;
+           case 1:
+               $scope.about();
+               break;
 
-   // Show the action sheet
-   $ionicActionSheet.show({
-     buttons: [
-       { text: '选项' },
-       { text: 'About this app' },
-     ],
-     destructiveText: 'Exit app',
-     buttonClicked: function(index) {
-       switch (index) {
-       case 0:
-           $scope.openModal();
-           break;
-       case 1:
-           $scope.about();
-           break;
+           default:
+               break;
+           }
+           return true;
+         },
 
-       default:
-           break;
-       }
-       return true;
-     },
+         destructiveButtonClicked: function() {
+           $scope.confirmExit();
+           return true;
+         }
 
-     destructiveButtonClicked: function() {
-       $scope.confirmExit();
-       return true;
-     }
+       });
+    };
 
-   });
-};
+    $scope.goHome = function() {
+      $state.go("index" );
+    }
 
     $ionicModal.fromTemplateUrl('modal.html', {
       scope: $scope,
@@ -41,17 +43,21 @@ angular.module('psaltir.controllers', [])
       $scope.modal = modal;
     });
 
-    // function to open the modal
     $scope.openModal = function () {
-      $scope.config = psaltirConfig.get();
       $scope.modal.show();
     };
 
-    // function to close the modal
+    // close the modal w/o saving
     $scope.closeModal = function () {
       $scope.modal.hide();
+      $scope.config = psaltirConfig.get();
     };
 
+    // save and close modal
+    $scope.saveConfig = function() {
+      $scope.modal.hide();
+      psaltirConfig.save($scope.config);
+    }
 
     $scope.about = function() {
       $ionicPopup.alert({
@@ -75,11 +81,6 @@ angular.module('psaltir.controllers', [])
 
     $scope.config = psaltirConfig.get();
 
-    $scope.saveConfig = function() {
-      $scope.modal.hide();
-      psaltirConfig.save($scope.config);
-    }
-
 })
 
 .service('psaltirConfig', function() {
@@ -96,6 +97,37 @@ angular.module('psaltir.controllers', [])
   this.save = function(config) {
     localStorage['psaltirionic'] = JSON.stringify(config);
   };
+
+})
+
+.run(function($rootScope,  $window, $state, psaltirConfig) {
+  $rootScope.$on("$stateChangeStart", function(e, toState, toParams, fromState, fromParams) {
+
+    config = psaltirConfig.get();
+
+    if (!$window.sessionStorage.initialized) {
+        $window.sessionStorage.initialized = true;
+
+        if (config.state && config.state != 99) {
+          e.preventDefault();
+          $state.go("kafisma", { id: config.state } );
+        }
+
+    } else if (toState.name == "index") {
+      config.state = 99;
+
+    } else {
+      config.state = toParams.id
+    }
+
+    psaltirConfig.save(config);
+
+  });
+
+
+  $rootScope.$on('$stateNotFound',  function(event, unfoundState, fromState, fromParams) {
+    alert('not found');
+  });
 
 });
 
