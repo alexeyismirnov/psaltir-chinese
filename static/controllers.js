@@ -82,6 +82,30 @@ angular.module('psaltir.controllers', [])
 
     $scope.config = psaltirConfig.get();
 
+    $scope.slava = function(num) {
+
+      var txt_short="荣光赞词";
+      var txt_long =  "榮耀歸於父及子及聖靈，自今至永遠及于萬世，阿們。\n" +
+                      "阿利魯伊亞，阿利魯伊亞，阿利魯伊亞，榮耀歸於祢，上帝。\n" + 
+                      "阿利魯伊亞，阿利魯伊亞，阿利魯伊亞，榮耀歸於祢，上帝。\n" + 
+                      "阿利魯伊亞，阿利魯伊亞，阿利魯伊亞，榮耀歸於祢，上帝。\n" + 
+                      "榮耀歸於父及子及聖靈，\n";
+
+      if (num == 1 && $scope.config.alive.trim().length > 0) 
+        txt_long += "主啊，求祢紀念祢的僕役 " + $scope.config.alive + "\n";
+
+      if (num == 2 && $scope.config.dead.trim().length > 0) 
+        txt_long += "主啊，求赐安息於祢亡故的僕役 " + $scope.config.dead + "\n" ;
+
+      txt_long += "自今至永遠及于萬世，阿們。\n";
+
+      if ($scope.config.showAll || $scope.config.alive.trim().length > 0 || $scope.config.dead.trim().length > 0)
+        return txt_long;
+
+      else
+        return txt_short;
+    }
+
 })
 
 .service('psaltirConfig', function() {
