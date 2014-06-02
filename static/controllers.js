@@ -56,6 +56,7 @@ angular.module('psaltir.controllers', [])
     // save and close modal
     $scope.saveConfig = function() {
       $scope.modal.hide();
+      $scope.config.fontstyle = $scope.config.fontsize + "%";
       psaltirConfig.save($scope.config);
     }
 
@@ -87,10 +88,12 @@ angular.module('psaltir.controllers', [])
 
   this.get = function() {
     if (localStorage['psaltirionic'] == null) 
-      return { fontsize: 14, alive: 'John', dead: '', showAll: false };
+      return { fontsize: '100', alive: 'John', dead: '', showAll: false };
 
     else 
-      return JSON.parse(localStorage['psaltirionic']);
+      config = JSON.parse(localStorage['psaltirionic']);
+      config.fontstyle = config.fontsize + "%";
+      return config;
 
   };
 

@@ -1,6 +1,7 @@
 /* Empty. Add your own CSS if you like */
 .rubric { color: red; font-size: 80%; font-family: 华文仿宋, 仿宋; }
 sup { color:blue; font-size:xx-small; }
-
-
+p { font-family: 华文仿宋, 仿宋; line-height: 130%; }
+h4 { font-size: 200%; }
+.item { font-size: 100%; }
 
